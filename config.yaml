@@ -1,0 +1,55 @@
+mqtt:
+  host: 192.168.1.2
+  port: 1883
+devices:
+  wb-mr6c_11:
+    controls:
+      K1:
+        force_type: light
+      K2:
+        force_type: light
+      K3:
+        force_type: light
+      K4:
+        force_type: light
+      K5:
+        force_type: light
+      K6:
+        force_type: fan
+  wb-mr3_27:
+    controls:
+      K1:
+        force_type: light
+      K2:
+        force_type: light
+      K3:
+        force_type: light
+  wb-mr3_32:
+    controls:
+      K1:
+        force_type: light
+      K2:
+        force_type: light
+      K3:
+        force_type: light
+  wb-mr6c_19:
+    controls:
+      K1:
+        force_type: light
+      K2:
+        force_type: light
+      K3:
+        force_type: light
+      K4:
+        force_type: light
+      K5:
+        force_type: fan
+      K6:
+        force_type: light
+  wb-map6s_20:
+    exclude_controls:
+      - "^.* [1-6]$"
+    controls:
+      Frequency:
+        overrides:
+          unit_of_measurement: Hz
