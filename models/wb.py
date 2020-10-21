@@ -29,10 +29,25 @@ class WBControlMetaType(Enum):
     HEAT_POWER = b"heat_power"
     HEAT_ENERGY = b"heat_energy"
 
+    @property
     def is_value_like(self) -> bool:
-        return self in [self.VALUE, self.TEMPERATURE, self.REL_HUMIDITY, self.ATMOSPHERIC_PRESSURE, self.RAINFALL,
-                        self.WIND_SPEED, self.POWER, self.POWER_CONSUMPTION, self.VOLTAGE, self.WATER_FLOW,
-                        self.WATER_CONSUMPTION, self.RESISTANCE, self.CONCENTRATION, self.HEAT_POWER, self.HEAT_ENERGY]
+        return self in [
+            self.VALUE,
+            self.TEMPERATURE,
+            self.REL_HUMIDITY,
+            self.ATMOSPHERIC_PRESSURE,
+            self.RAINFALL,
+            self.WIND_SPEED,
+            self.POWER,
+            self.POWER_CONSUMPTION,
+            self.VOLTAGE,
+            self.WATER_FLOW,
+            self.WATER_CONSUMPTION,
+            self.RESISTANCE,
+            self.CONCENTRATION,
+            self.HEAT_POWER,
+            self.HEAT_ENERGY,
+        ]
 
 
 class WBControlMeta(BaseModel):

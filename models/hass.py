@@ -4,7 +4,23 @@ from typing import List, Optional, Union
 from pydantic import BaseModel
 
 
-class DeviceMeta(BaseModel):
+class HassIntegrationType(Enum):
+    SWITCH = "switch"
+    BINARY_SENSOR = "binary_sensor"
+    SENSOR = "sensor"
+    LIGHT = "light"
+    FAN = "fan"
+    ALARM = "alarm_control_panel"
+    CAMERA = "camera"
+    COVER = "cover"
+    DEVICE_TRIGGER = "device_trigger"
+    CLIMATE = "climate"
+    LOCK = "lock"
+    TAG = "tag"
+    VACUUM = "vacuum"
+
+
+class HassDevice(BaseModel):
     connections: Optional[List[str]]
     identifiers: Optional[Union[List[str], str]]
     manufacturer: Optional[str]
@@ -14,18 +30,18 @@ class DeviceMeta(BaseModel):
     via_device: Optional[str]
 
 
-class Availability(BaseModel):
+class HassAvailability(BaseModel):
     payload_available: Optional[str]
     payload_not_available: Optional[str]
     topic: str
 
 
-class SwitchMeta(BaseModel):
-    availability: Optional[Availability]
+class HassSwitchMeta(BaseModel):
+    availability: Optional[HassAvailability]
     availability_topic: Optional[str]
 
     command_topic: Optional[str]
-    device: Optional[DeviceMeta]
+    device: Optional[HassDevice]
     icon: Optional[str]
 
     name: Optional[str]
@@ -47,7 +63,7 @@ class SwitchMeta(BaseModel):
     value_template: Optional[str]
 
 
-class BinarySensorMeta(BaseModel):
+class HassBinarySensorMeta(BaseModel):
     class DeviceClass(Enum):
         BATTERY = "battery"
         BATTERY_CHARGING = "battery_charging"
@@ -74,10 +90,10 @@ class BinarySensorMeta(BaseModel):
         VIBRATION = "vibration"
         WINDOW = "window"
 
-    availability: Optional[Availability]
+    availability: Optional[HassAvailability]
     availability_topic: Optional[str]
 
-    device: Optional[DeviceMeta]
+    device: Optional[HassDevice]
     device_class: Optional[DeviceClass]
     name: Optional[str]
 
@@ -93,7 +109,7 @@ class BinarySensorMeta(BaseModel):
     value_template: Optional[str]
 
 
-class SensorMeta(BaseModel):
+class HassSensorMeta(BaseModel):
     class DeviceClass(Enum):
         BATTERY = "battery"
         HUMIDITY = "humidity"
@@ -110,7 +126,7 @@ class SensorMeta(BaseModel):
 
     availability_topic: Optional[str]
 
-    device: Optional[DeviceMeta]
+    device: Optional[HassDevice]
     device_class: Optional[DeviceClass]
 
     expire_after: Optional[int]

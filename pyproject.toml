@@ -19,7 +19,7 @@ description = ""
 authors = ["Alexander Shishenko <alex@shishenko.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.6"
+python = "^3.9"
 devtools = "^0.6"
 aiojobs = "^0.2.2"
 gmqtt = "^0.6.7"
@@ -27,6 +27,8 @@ pydantic = "^1.6.1"
 python-slugify = "^4.0.1"
 PyYAML = "^5.3.1"
 click = "^7.1.2"
+loguru = "^0.5.3"
+deepdiff = "^5.0.2"
 
 [tool.poetry.dev-dependencies]
 isort = "^5.6.4"

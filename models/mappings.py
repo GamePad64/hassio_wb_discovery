@@ -1,13 +1,13 @@
-from models.hass import SensorMeta
+from models.hass import HassSensorMeta
 from models.wb import WBControlMetaType
 
 VALUE_MAPPING = {
-    WBControlMetaType.TEMPERATURE: SensorMeta.DeviceClass.TEMPERATURE,
-    WBControlMetaType.REL_HUMIDITY: SensorMeta.DeviceClass.HUMIDITY,
-    WBControlMetaType.ATMOSPHERIC_PRESSURE: SensorMeta.DeviceClass.PRESSURE,
-    WBControlMetaType.POWER: SensorMeta.DeviceClass.POWER,
-    WBControlMetaType.POWER_CONSUMPTION: SensorMeta.DeviceClass.ENERGY,
-    WBControlMetaType.VOLTAGE: SensorMeta.DeviceClass.VOLTAGE,
+    WBControlMetaType.TEMPERATURE: HassSensorMeta.DeviceClass.TEMPERATURE,
+    WBControlMetaType.REL_HUMIDITY: HassSensorMeta.DeviceClass.HUMIDITY,
+    WBControlMetaType.ATMOSPHERIC_PRESSURE: HassSensorMeta.DeviceClass.PRESSURE,
+    WBControlMetaType.POWER: HassSensorMeta.DeviceClass.POWER,
+    WBControlMetaType.POWER_CONSUMPTION: HassSensorMeta.DeviceClass.ENERGY,
+    WBControlMetaType.VOLTAGE: HassSensorMeta.DeviceClass.VOLTAGE,
 }
 
 VALUE_UNITS = {

@@ -2,7 +2,10 @@ from __future__ import annotations
 
 import asyncio
 import json
-import logging
+from typing import Dict, Any
+from deepdiff import DeepDiff
+
+from loguru import logger
 import re
 import signal
 
@@ -15,17 +18,16 @@ from pydantic.json import pydantic_encoder
 
 from device_drivers.generic import GenericDriver
 from models.config import Config, DeviceSettings
-from models.hass import DeviceMeta
+from models.hass import HassDevice
 from util import Tree
 
-logger = logging.getLogger(__name__)
 devices = Tree()
 drivers = {"generic": GenericDriver}
 STOP = asyncio.Event()
 
 
 def on_connect(client, flags, rc, properties):
-    print("Connected with result code " + str(rc))
+    logger.info("Connected with result code " + str(rc))
 
     # Subscribing in on_connect() means that if we lose the connection and
     # reconnect then subscriptions will be renewed.
@@ -35,7 +37,7 @@ def on_connect(client, flags, rc, properties):
 
 def on_message(client, topic, payload, qos, properties):
     if m := re.match("/devices/(?P<subtopic>.+)$", topic):
-        topics = m['subtopic'].split('/')
+        topics = m["subtopic"].split("/")
 
         d = devices
         for subtopic in topics[:-1]:
@@ -44,7 +46,7 @@ def on_message(client, topic, payload, qos, properties):
 
 
 def on_disconnect(client, packet, exc=None):
-    logger.info('Disconnected from MQTT broker')
+    logger.info("Disconnected from MQTT broker")
 
 
 def ask_exit(*args):
@@ -53,7 +55,7 @@ def ask_exit(*args):
 
 def process_device_tree(config: Config):
     for device_id, device in devices.items():
-        dm = DeviceMeta(identifiers=[f"{config.homeassistant.control_prefix}{device_id}"], name=device['meta']['name'])
+        dm = HassDevice(identifiers=[f"{config.homeassistant.control_prefix}{device_id}"], name=device["meta"]["name"])
 
         device_settings: DeviceSettings = config.devices.get(device_id, DeviceSettings())
         driver = drivers[device_settings.driver]
@@ -62,14 +64,25 @@ def process_device_tree(config: Config):
 
 
 async def process_device_tree_task(client: MQTTClient, config: Config):
+    published_topics: Dict[str, Dict[str, Any]] = {}
+
     while 1:
         await asyncio.sleep(5)
 
+        devices_count = 0
         for topic, payload in process_device_tree(config):
-            # debug((topic, payload.json(exclude_none=True)))
-            payload_json = json.dumps(payload, default=pydantic_encoder)
-            client.publish(topic, payload_json)
-            print(f"Published: {topic}, {payload_json}")
+            diff = DeepDiff(published_topics.get(topic, None), payload)
+            if diff or not diff:
+                published_topics[topic] = payload
+
+                payload_json = json.dumps(payload, default=pydantic_encoder)
+                client.publish(topic, payload_json)
+
+                devices_count += 1
+                logger.debug(f"Published: {topic}, {payload_json}")
+
+        if devices_count:
+            logger.info(f"Published {devices_count} devices")
 
 
 async def main(config: Config):
@@ -90,11 +103,10 @@ async def main(config: Config):
     await scheduler.close()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     with open("config.yaml") as f:
         conf = Config(**yaml.safe_load(f))
 
-    debug(conf)
     loop = asyncio.get_event_loop()
 
     loop.add_signal_handler(signal.SIGINT, ask_exit)

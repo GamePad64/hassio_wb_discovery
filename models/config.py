@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from collections import defaultdict
 from functools import partial
 from typing import Any, Dict, Optional, Pattern, List
@@ -21,6 +23,7 @@ class ControlSettings(BaseModel):
 
 
 class DeviceSettings(BaseModel):
+
     driver: str = Field(default="generic")
     controls: Dict[str, ControlSettings] = Field(default_factory=dict)
     exclude_controls: List[Pattern] = Field(default_factory=list)
