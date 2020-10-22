@@ -4,7 +4,7 @@ import asyncio
 import json
 import re
 from asyncio import Task
-from collections import AsyncIterable, Iterable, Iterator
+from collections import AsyncIterable, Iterator
 from contextlib import AsyncExitStack
 from typing import Any, BinaryIO, Dict, Set, Tuple
 
@@ -19,20 +19,9 @@ from pydantic.json import pydantic_encoder
 from .device_drivers.generic import GenericDriver
 from .models.config import Config, DeviceSettings
 from .models.hass import HassDevice
-from .util import Tree
+from .util import Tree, cancel_tasks
 
 drivers = {"generic": GenericDriver}
-
-
-async def cancel_tasks(tasks: Iterable[Task]) -> None:
-    for task in tasks:
-        if task.done():
-            continue
-        task.cancel()
-        try:
-            await task
-        except asyncio.CancelledError:
-            pass
 
 
 async def process_messages(messages: AsyncIterable[MQTTMessage], devices: Tree) -> None:
@@ -75,7 +64,7 @@ async def publish_devices(
         logger.info(f"Published {devices_count} devices")
 
 
-async def process_device_tree_task(client: MQTTClient, config: Config, devices: Tree, sleep: int = 5) -> None:
+async def periodic_publish_devices(client: MQTTClient, config: Config, devices: Tree, sleep: int = 5) -> None:
     published_topics: Dict[str, Dict[str, Any]] = {}
 
     while True:
@@ -132,7 +121,7 @@ async def main(config: Config) -> None:
         await client.subscribe([(topic, 0) for topic in status_topic_filters])
 
         # Add periodic task
-        task = asyncio.create_task(process_device_tree_task(client, config, devices))
+        task = asyncio.create_task(periodic_publish_devices(client, config, devices))
         tasks.add(task)
 
         await asyncio.gather(*tasks)

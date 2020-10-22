@@ -12,7 +12,7 @@ RUN apk add --no-cache --virtual .build-deps build-base libffi-dev openssl-dev &
     poetry install --no-dev -v && \
     apk del .build-deps
 
-COPY start.sh /app/start.sh
+COPY . /app
 ENTRYPOINT ["/app/start.sh"]
 
 LABEL io.hass.version="VERSION" io.hass.type="addon" io.hass.arch="armhf|aarch64|i386|amd64"
