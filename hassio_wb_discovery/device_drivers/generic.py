@@ -1,14 +1,18 @@
 from __future__ import annotations
 
-from typing import Any, Dict, Tuple, Iterator, Optional
+from typing import Any, Dict, Iterator, Optional, Tuple
 
 from pydantic import BaseModel
 from slugify import slugify
 
-from models.config import Config, DeviceSettings, ControlSettings
-from models.hass import HassBinarySensorMeta, HassDevice, HassSensorMeta, HassSwitchMeta, HassIntegrationType
-from models.mappings import VALUE_MAPPING, VALUE_UNITS
-from models.wb import WBControlMeta, WBControlMetaType
+from ..models.config import Config, ControlSettings, DeviceSettings
+from ..models.hass import HassBinarySensorMeta, HassDevice, HassIntegrationType, HassSensorMeta, HassSwitchMeta
+from ..models.mappings import VALUE_MAPPING, VALUE_UNITS
+from ..models.wb import WBControlMeta, WBControlMetaType
+
+
+class UnknownIntegrationError(Exception):
+    pass
 
 
 class GenericControl:
@@ -27,7 +31,7 @@ class GenericControl:
         self.config = config
 
     @property
-    def integration_logic(self) -> Optional[HassIntegrationType]:
+    def integration_logic(self) -> HassIntegrationType:
         if self.wb_control_meta.type == WBControlMetaType.SWITCH:
             if not self.wb_control_meta.readonly:
                 return HassIntegrationType.SWITCH
@@ -36,8 +40,10 @@ class GenericControl:
         elif self.wb_control_meta.type.is_value_like:
             return HassIntegrationType.SENSOR
 
+        raise UnknownIntegrationError()
+
     @property
-    def _integration_type(self) -> Optional[HassIntegrationType]:
+    def _integration_type(self) -> HassIntegrationType:
         if self.integration_logic == HassIntegrationType.SWITCH and self.control_settings.force_type:
             return HassIntegrationType(self.control_settings.force_type)
         return self.integration_logic
@@ -46,11 +52,11 @@ class GenericControl:
         return {**meta.dict(exclude_unset=True, exclude_none=True), **self.control_settings.overrides}
 
     @property
-    def device_class(self) -> HassSensorMeta.DeviceClass:
+    def device_class(self) -> Optional[HassSensorMeta.DeviceClass]:
         return VALUE_MAPPING.get(self.wb_control_meta.type)
 
     @property
-    def unit_of_measurement(self) -> str:
+    def unit_of_measurement(self) -> Optional[str]:
         return VALUE_UNITS.get(self.wb_control_meta.type)
 
     @property
@@ -59,18 +65,18 @@ class GenericControl:
 
     @property
     def topic(self) -> str:
-        return f"{self.config.homeassistant.discovery_prefix}/{self._integration_type}/{self.unique_id}/config"
+        return f"{self.config.homeassistant.discovery_prefix}/{self._integration_type.value}/{self.unique_id}/config"
 
     @property
     def wb_value_topic(self) -> str:
         return f"/devices/{self.device_id}/controls/{self.control_id}"
 
+    @property
+    def wb_command_topic(self) -> str:
+        return f"/devices/{self.device_id}/controls/{self.control_id}/on"
+
 
 class GenericDriver:
-    @staticmethod
-    def make_topic(unique_id, integration_type, config):
-        return f"{config.homeassistant.discovery_prefix}/{integration_type}/{unique_id}/config"
-
     @classmethod
     def process(
         cls,
@@ -99,36 +105,36 @@ class GenericDriver:
             )
 
             if control.integration_logic == HassIntegrationType.SWITCH:
-                meta = HassSwitchMeta(
-                    device=hass_device,
-                    command_topic=control.wb_value_topic,
-                    payload_off="0",
-                    payload_on="1",
-                    state_topic=control.wb_value_topic,
-                    name=control_name,
-                    unique_id=control.unique_id,
+                yield control.topic, control.meta_to_dict(
+                    HassSwitchMeta(
+                        device=hass_device,
+                        command_topic=control.wb_command_topic,
+                        payload_off="0",
+                        payload_on="1",
+                        state_topic=control.wb_value_topic,
+                        name=control_name,
+                        unique_id=control.unique_id,
+                    )
                 )
-
-                yield control.topic, control.meta_to_dict(meta)
             elif control.integration_logic == HassIntegrationType.BINARY_SENSOR:
-                meta = HassBinarySensorMeta(
-                    device=hass_device,
-                    payload_off="0",
-                    payload_on="1",
-                    state_topic=control.wb_value_topic,
-                    name=control_name,
-                    unique_id=control.unique_id,
+                yield control.topic, control.meta_to_dict(
+                    HassBinarySensorMeta(
+                        device=hass_device,
+                        payload_off="0",
+                        payload_on="1",
+                        state_topic=control.wb_value_topic,
+                        name=control_name,
+                        unique_id=control.unique_id,
+                    )
                 )
-
-                yield control.topic, control.meta_to_dict(meta)
             elif control.integration_logic == HassIntegrationType.SENSOR:
-                meta = HassSensorMeta(
-                    device=hass_device,
-                    device_class=control.device_class,
-                    state_topic=control.wb_value_topic,
-                    name=control_name,
-                    unique_id=control.unique_id,
-                    unit_of_measurement=control.unit_of_measurement,
+                yield control.topic, control.meta_to_dict(
+                    HassSensorMeta(
+                        device=hass_device,
+                        device_class=control.device_class,
+                        state_topic=control.wb_value_topic,
+                        name=control_name,
+                        unique_id=control.unique_id,
+                        unit_of_measurement=control.unit_of_measurement,
+                    )
                 )
-
-                yield control.topic, control.meta_to_dict(meta)

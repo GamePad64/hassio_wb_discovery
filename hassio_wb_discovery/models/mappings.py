@@ -1,5 +1,5 @@
-from models.hass import HassSensorMeta
-from models.wb import WBControlMetaType
+from .hass import HassSensorMeta
+from .wb import WBControlMetaType
 
 VALUE_MAPPING = {
     WBControlMetaType.TEMPERATURE: HassSensorMeta.DeviceClass.TEMPERATURE,
