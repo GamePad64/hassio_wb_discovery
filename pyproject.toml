@@ -31,7 +31,7 @@ hassio_wb_discovery = 'hassio_wb_discovery.main:cli'
 
 [tool.poetry.dependencies]
 python = "^3.9"
-devtools = "^0.6"
+devtools = "^0.8"
 pydantic = "^1.6.1"
 python-slugify = "^4.0.1"
 PyYAML = "^5.3.1"
