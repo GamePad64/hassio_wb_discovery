@@ -1,7 +1,8 @@
 repo_name: GamePad64/hassio_wb_discovery
 report_id: dfcf025ae7e967b94656e2b3178046df
+version: 0.1
 repo_type: Public
-timestamp: '2023-11-09T15:18:28+00:00'
+timestamp: '2024-01-04T14:58:53+00:00'
 requested_by: GamePad64
 provider: github
 branch: master
@@ -16,6 +17,7 @@ tools:
   category: Languages & Frameworks
   sub_category: Languages
   image_url: https://img.stackshare.io/service/993/pUBY5pVj.png
+  detection_source_url: https://github.com/GamePad64/hassio_wb_discovery
   detection_source: Repo Metadata
 - name: Docker
   description: Enterprise Container Platform for High-Velocity Innovation.
@@ -26,6 +28,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Virtual Machine Platforms & Containers
   image_url: https://img.stackshare.io/service/586/n4u37v9t_400x400.png
+  detection_source_url: https://github.com/GamePad64/hassio_wb_discovery
   detection_source: Repo Metadata
 - name: Git
   description: Fast, scalable, distributed revision control system
@@ -35,6 +38,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Version Control System
   image_url: https://img.stackshare.io/service/1046/git.png
+  detection_source_url: https://github.com/GamePad64/hassio_wb_discovery
   detection_source: Repo Metadata
 - name: PyPI
   description: A repository of software for the Python programming language
@@ -44,6 +48,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Hosted Package Repository
   image_url: https://img.stackshare.io/service/12572/-RIWgodF_400x400.jpg
+  detection_source_url: https://github.com/GamePad64/hassio_wb_discovery/blob/master/pyproject.toml
   detection_source: pyproject.toml
   last_updated_by: Alexander Shishenko
   last_updated_on: 2020-10-21 03:21:56.000000000 Z
@@ -56,10 +61,11 @@ tools:
   category: Languages & Frameworks
   sub_category: Languages
   image_url: https://img.stackshare.io/service/4631/default_c2062d40130562bdc836c13dbca02d318205a962.png
+  detection_source_url: https://github.com/GamePad64/hassio_wb_discovery
   detection_source: Repo Metadata
 - name: PyYAML
   description: YAML parser and emitter for Python
-  package_url: https://pypi.org/PyYAML
+  package_url: https://pypi.org/project/PyYAML
   version: 5.3.1
   license: MIT
   open_source: true
@@ -67,7 +73,7 @@ tools:
   category: Libraries
   sub_category: PyPI Packages
   image_url: https://img.stackshare.io/package/19829/default_74a61b43bdb9fc0cba2978316b9976f43545029b.png
-  detection_source_url: pyproject.toml
+  detection_source_url: https://github.com/GamePad64/hassio_wb_discovery/blob/master/pyproject.toml
   detection_source: pyproject.toml
   last_updated_by: Alexander Shishenko
   last_updated_on: 2020-10-21 03:21:56.000000000 Z
@@ -80,19 +86,20 @@ tools:
     first_patched: '5.4'
 - name: black
   description: The uncompromising code formatter
-  package_url: https://pypi.org/black
+  package_url: https://pypi.org/project/black
   license: MIT
   open_source: true
   hosted_saas: false
   category: Libraries
   sub_category: PyPI Packages
   image_url: https://img.stackshare.io/package/20099/default_029b9bbfb6be2cd34bebeda5b8e1e80a1d22441c.png
+  detection_source_url: https://github.com/GamePad64/hassio_wb_discovery/blob/master/pyproject.toml
   detection_source: pyproject.toml
   last_updated_by: Alexander Shishenko
   last_updated_on: 2020-10-21 03:21:56.000000000 Z
 - name: click
   description: Composable command line interface toolkit
-  package_url: https://pypi.org/click
+  package_url: https://pypi.org/project/click
   version: 7.1.2
   license: BSD-3-Clause
   open_source: true
@@ -100,13 +107,13 @@ tools:
   category: Libraries
   sub_category: PyPI Packages
   image_url: https://img.stackshare.io/package/19830/default_74a61b43bdb9fc0cba2978316b9976f43545029b.png
-  detection_source_url: poetry.lock
+  detection_source_url: https://github.com/GamePad64/hassio_wb_discovery/blob/master/poetry.lock
   detection_source: pyproject.toml
   last_updated_by: Alexander Shishenko
   last_updated_on: 2020-10-21 03:21:56.000000000 Z
 - name: deepdiff
   description: Deep Difference and Search of any Python object/data
-  package_url: https://pypi.org/deepdiff
+  package_url: https://pypi.org/project/deepdiff
   version: 5.0.2
   license: MIT
   open_source: true
@@ -114,13 +121,13 @@ tools:
   category: Libraries
   sub_category: PyPI Packages
   image_url: https://img.stackshare.io/package/20217/default_d4dd0466552a9776ca8535b869e22a3362790c94.png
-  detection_source_url: poetry.lock
+  detection_source_url: https://github.com/GamePad64/hassio_wb_discovery/blob/master/poetry.lock
   detection_source: pyproject.toml
   last_updated_by: Alexander Shishenko
   last_updated_on: 2020-10-21 13:30:12.000000000 Z
 - name: flake8
   description: 'The modular source code checker: pep8, pyflakes and co'
-  package_url: https://pypi.org/flake8
+  package_url: https://pypi.org/project/flake8
   version: 3.8.4
   license: MIT
   open_source: true
@@ -128,13 +135,13 @@ tools:
   category: Libraries
   sub_category: PyPI Packages
   image_url: https://img.stackshare.io/package/19920/default_c8be5290cb8d8a8b578535a2c6475d1057ff4ea4.png
-  detection_source_url: poetry.lock
+  detection_source_url: https://github.com/GamePad64/hassio_wb_discovery/blob/master/poetry.lock
   detection_source: pyproject.toml
   last_updated_by: Alexander Shishenko
   last_updated_on: 2020-10-21 03:21:56.000000000 Z
 - name: isort
   description: A Python utility / library to sort Python imports
-  package_url: https://pypi.org/isort
+  package_url: https://pypi.org/project/isort
   version: 5.6.4
   license: MIT
   open_source: true
@@ -142,13 +149,13 @@ tools:
   category: Libraries
   sub_category: PyPI Packages
   image_url: https://img.stackshare.io/package/20117/default_9cf91bfbbfb266fc12a914cdc09d9e4b55c773bb.png
-  detection_source_url: poetry.lock
+  detection_source_url: https://github.com/GamePad64/hassio_wb_discovery/blob/master/poetry.lock
   detection_source: pyproject.toml
   last_updated_by: Alexander Shishenko
   last_updated_on: 2020-10-22 12:10:32.000000000 Z
 - name: loguru
   description: Python logging made
-  package_url: https://pypi.org/loguru
+  package_url: https://pypi.org/project/loguru
   version: 0.5.3
   license: MIT
   open_source: true
@@ -156,7 +163,7 @@ tools:
   category: Libraries
   sub_category: PyPI Packages
   image_url: https://img.stackshare.io/package/20043/default_15ea2ed8281eccea374610791971ca44800f16ec.png
-  detection_source_url: poetry.lock
+  detection_source_url: https://github.com/GamePad64/hassio_wb_discovery/blob/master/poetry.lock
   detection_source: pyproject.toml
   last_updated_by: Alexander Shishenko
   last_updated_on: 2020-10-21 13:30:12.000000000 Z
@@ -169,7 +176,7 @@ tools:
     first_patched: 0.6.0
 - name: mypy
   description: Optional static typing for Python
-  package_url: https://pypi.org/mypy
+  package_url: https://pypi.org/project/mypy
   version: '0.790'
   license: MIT
   open_source: true
@@ -177,14 +184,14 @@ tools:
   category: Libraries
   sub_category: PyPI Packages
   image_url: https://img.stackshare.io/package/20219/default_d4dd0466552a9776ca8535b869e22a3362790c94.png
-  detection_source_url: poetry.lock
+  detection_source_url: https://github.com/GamePad64/hassio_wb_discovery/blob/master/poetry.lock
   detection_source: pyproject.toml
   last_updated_by: Alexander Shishenko
   last_updated_on: 2020-10-21 03:21:56.000000000 Z
 - name: pre-commit
   description: A framework for managing and maintaining multi-language pre-commit
     hooks
-  package_url: https://pypi.org/pre-commit
+  package_url: https://pypi.org/project/pre-commit
   version: 2.7.1
   license: MIT
   open_source: true
@@ -192,13 +199,13 @@ tools:
   category: Libraries
   sub_category: PyPI Packages
   image_url: https://img.stackshare.io/package/20560/default_d975dcf643a054134f39226d51d4a5fea9320efe.png
-  detection_source_url: poetry.lock
+  detection_source_url: https://github.com/GamePad64/hassio_wb_discovery/blob/master/poetry.lock
   detection_source: pyproject.toml
   last_updated_by: Alexander Shishenko
   last_updated_on: 2020-10-22 12:10:32.000000000 Z
 - name: pydantic
   description: Data validation and settings management using python 3.6 type hinting
-  package_url: https://pypi.org/pydantic
+  package_url: https://pypi.org/project/pydantic
   version: 1.6.1
   license: MIT
   open_source: true
@@ -206,7 +213,7 @@ tools:
   category: Libraries
   sub_category: PyPI Packages
   image_url: https://img.stackshare.io/package/20022/default_b0d1a54f127d7017fce41c15f5e85568fb7019ed.png
-  detection_source_url: poetry.lock
+  detection_source_url: https://github.com/GamePad64/hassio_wb_discovery/blob/master/poetry.lock
   detection_source: pyproject.toml
   last_updated_by: Alexander Shishenko
   last_updated_on: 2020-10-21 03:21:56.000000000 Z
@@ -220,7 +227,7 @@ tools:
     first_patched: 1.6.2
 - name: python-slugify
   description: A Python Slugify application that handles Unicode
-  package_url: https://pypi.org/python-slugify
+  package_url: https://pypi.org/project/python-slugify
   version: 4.0.1
   license: MIT
   open_source: true
@@ -228,7 +235,7 @@ tools:
   category: Libraries
   sub_category: PyPI Packages
   image_url: https://img.stackshare.io/package/19986/default_aa331bbc48e2faa54aa26e08880b772595f833b8.png
-  detection_source_url: poetry.lock
+  detection_source_url: https://github.com/GamePad64/hassio_wb_discovery/blob/master/poetry.lock
   detection_source: pyproject.toml
   last_updated_by: Alexander Shishenko
   last_updated_on: 2020-10-21 13:30:12.000000000 Z
