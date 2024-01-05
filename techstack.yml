@@ -2,7 +2,7 @@ repo_name: GamePad64/hassio_wb_discovery
 report_id: dfcf025ae7e967b94656e2b3178046df
 version: 0.1
 repo_type: Public
-timestamp: '2024-01-04T14:58:53+00:00'
+timestamp: '2024-01-05T09:21:49+00:00'
 requested_by: GamePad64
 provider: github
 branch: master
